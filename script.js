@@ -1,104 +1,94 @@
+d3.csv('ivispro_data_comma.csv', function (data) {
+    // Variables
+    var body = d3.select('body')
+    var margin = { top: 50, right: 50, bottom: 50, left: 50 }
+    var h = 500 - margin.top - margin.bottom
+    var w = 500 - margin.left - margin.right
+    var formatPercent = d3.format('.2%')
+    // Scales
+    var colorScale = d3.scale.category20()
 
-var height = 400;
-var width = 600;
-var margin = 40;
-var data =[];
-for(var i = 0; i < 42; i++) {
-	data.push({
-    	x: Math.random() * 400,
-        y: Math.random() * 100,
-        c: Math.round(Math.random() * 5),
-        size: Math.random() * 200,
-        });
-}
-
-var labelX = 'X';
-var labelY = 'Y';
-var svg = d3.select('.chart')
-                    .append('svg')
-                    .attr('class', 'chart')
-                    .attr("width", width + margin + margin)
-                    .attr("height", height + margin + margin)
-                    .append("g")
-                    .attr("transform", "translate(" + margin + "," + margin + ")");
-                    
-var x = d3.scale.linear()
-					            .domain([d3.min(data, function (d) { return d.x; }), d3.max(data, function (d) { return d.x; })])
-					            .range([0, width]);
-
-var y = d3.scale.linear()
-					            .domain([d3.min(data, function (d) { return d.y; }), d3.max(data, function (d) { return d.y; })])
-					            .range([height, 0]);
-
-var scale = d3.scale.sqrt()
-					            .domain([d3.min(data, function (d) { return d.size; }), d3.max(data, function (d) { return d.size; })])
-					            .range([1, 20]);
-
-var opacity = d3.scale.sqrt()
-					            .domain([d3.min(data, function (d) { return d.size; }), d3.max(data, function (d) { return d.size; })])
-					            .range([1, .5]);
-                                
-var color = d3.scale.category10();
-
-var xAxis = d3.svg.axis().scale(x);
- var yAxis = d3.svg.axis().scale(y).orient("left");
- 
-  svg.append("g")
-					        .attr("class", "y axis")
-					        .call(yAxis)
-					        .append("text")
-						        .attr("transform", "rotate(-90)")
-						        .attr("x", 20)
-						        .attr("y", -margin)
-						        .attr("dy", ".71em")
-						        .style("text-anchor", "end")
-						        .text(labelY);
-                          // x axis and label
-                          svg.append("g")
-                              .attr("class", "x axis")
-                              .attr("transform", "translate(0," + height + ")")
-                              .call(xAxis)
-                              .append("text")
-                                  .attr("x", width + 20)
-                                  .attr("y", margin - 10)
-                                  .attr("dy", ".71em")
-                                  .style("text-anchor", "end")
-                                  .text(labelX);
- 
-svg.selectAll("circle")
-                              .data(data)
-                              .enter()
-                              .insert("circle")
-                              .attr("cx", width / 2)
-                              .attr("cy", height / 2)
-                              .attr("opacity", function (d) { return opacity(d.size); })
-                              .attr("r", function (d) { return scale(d.size); })
-                              .style("fill", function (d) { return color(d.c); })
-                              .on('mouseover', function (d, i) {
-                                  fade(d.c, .1);
-                              })
-                             .on('mouseout', function (d, i) {
-                                 fadeOut();
-                             })
-                             .transition()
-                            .delay(function (d, i) { return x(d.x) - y(d.y); })
-                            .duration(500)
-                            .attr("cx", function (d) { return x(d.x); })
-                            .attr("cy", function (d) { return y(d.y); })
-                            .ease("bounce");
-                             
-                             
-function fade(c, opacity) {
-                              svg.selectAll("circle")
-                                  .filter(function (d) {
-                                      return d.c != c;
-                                  })
-                                .transition()
-                                 .style("opacity", opacity);
-                          }
-
-                          function fadeOut() {
-                              svg.selectAll("circle")
-                              .transition()
-                                 .style("opacity", function (d) { opacity(d.size); });
-                          }
+    var xScale = d3.scale.linear()
+        .domain([
+            d3.min([0,d3.min(data,function (d) { return (d.Year2010) })]),
+            d3.max([0,d3.max(data,function (d) { return (d.Year2010) })])
+        ])
+        .range([0,w])
+    var yScale = d3.scale.linear()
+        .domain([
+            d3.min([0,d3.min(data,function (d) { return (d.Year2011) })]),
+            d3.max([0,d3.max(data,function (d) { return (d.Year2011) })])
+        ])
+        .range([h,0])
+    // SVG
+    var svg = body.append('svg')
+        .attr('height',h + margin.top + margin.bottom)
+        .attr('width',w + margin.left + margin.right)
+        .append('g')
+        .attr('transform','translate(' + margin.left + ',' + margin.top + ')')
+    // X-axis
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .tickFormat(d3.format(".2f"))
+        .ticks(5)
+        .orient('bottom')
+    // Y-axis
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .tickFormat(d3.format(".2f"))
+        .ticks(5)
+        .orient('left')
+    // Circles
+    var circles = svg.selectAll('circle')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('cx',function (d) { return xScale(d.Year2010) })
+        .attr('cy',function (d) { return yScale(d.Year2011) })
+        .attr('r','10')
+        .attr('stroke','black')
+        .attr('stroke-width',1)
+        .attr('fill',function (d,i) { return colorScale(i) })
+        .on('mouseover', function () {
+            d3.select(this)
+                .transition()
+                .duration(500)
+                .attr('r',20)
+                .attr('stroke-width',3)
+        })
+        .on('mouseout', function () {
+            d3.select(this)
+                .transition()
+                .duration(500)
+                .attr('r',10)
+                .attr('stroke-width',1)
+        })
+        .append('title') // Tooltip
+        .text(function (d) { return d.Country +
+            '\nYear 2010: ' + (d.Year2010) +
+            '\nYear 2011: ' + (d.Year2011) })
+    // X-axis
+    svg.append('g')
+        .attr('class','axis')
+        .attr('transform', 'translate(0,' + h + ')')
+        .call(xAxis)
+        .append('text') // X-axis Label
+        .attr('class','label')
+        .attr('y',-10)
+        .attr('x',w)
+        .attr('dy','.71em')
+        .style('text-anchor','end')
+        .text('Annualized Standard Deviation')
+    // Y-axis
+    svg.append('g')
+        .attr('class', 'axis')
+        .call(yAxis)
+        .append('text') // y-axis Label
+        .attr('class','label')
+        .attr('transform','rotate(-90)')
+        .attr('x',0)
+        .attr('y',5)
+        .attr('dy','.71em')
+        .style('text-anchor','end')
+        .text('Annualized Return')
+})
