@@ -2,24 +2,18 @@ d3.csv('ivispro_data_comma.csv', function (data) {
     // Variables
     var body = d3.select('body')
     var margin = { top: 50, right: 50, bottom: 50, left: 50 }
-    var h = 500 - margin.top - margin.bottom
-    var w = 500 - margin.left - margin.right
-    var formatPercent = d3.format('.2%')
+    var h = 600
+    var w = 600
+
     // Scales
     var colorScale = d3.scale.category20()
 
     var xScale = d3.scale.linear()
-        .domain([
-            d3.min([0,d3.min(data,function (d) { return (d.Year2010) })]),
-            d3.max([0,d3.max(data,function (d) { return (d.Year2010) })])
-        ])
-        .range([0,w])
+        .domain([0,65000])
+        .range([0,600])
     var yScale = d3.scale.linear()
-        .domain([
-            d3.min([0,d3.min(data,function (d) { return (d.Year2011) })]),
-            d3.max([0,d3.max(data,function (d) { return (d.Year2011) })])
-        ])
-        .range([h,0])
+        .domain([0,65000])
+        .range([600,0])
     // SVG
     var svg = body.append('svg')
         .attr('height',h + margin.top + margin.bottom)
@@ -29,13 +23,10 @@ d3.csv('ivispro_data_comma.csv', function (data) {
     // X-axis
     var xAxis = d3.svg.axis()
         .scale(xScale)
-        .tickFormat(d3.format(".2f"))
         .ticks(5)
-        .orient('bottom')
     // Y-axis
     var yAxis = d3.svg.axis()
         .scale(yScale)
-        .tickFormat(d3.format(".2f"))
         .ticks(5)
         .orient('left')
     // Circles
@@ -78,7 +69,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
         .attr('x',w)
         .attr('dy','.71em')
         .style('text-anchor','end')
-        .text('Annualized Standard Deviation')
+        .text('X-Achse')
     // Y-axis
     svg.append('g')
         .attr('class', 'axis')
@@ -90,5 +81,5 @@ d3.csv('ivispro_data_comma.csv', function (data) {
         .attr('y',5)
         .attr('dy','.71em')
         .style('text-anchor','end')
-        .text('Annualized Return')
+        .text('Y-Achse')
 })
