@@ -10,7 +10,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
 
     var xScale = d3.scale.linear()
         .domain([0,65000])
-        .range([0,600])
+        .range([20,600])
     var yScale = d3.scale.linear()
         .domain([0,65000])
         .range([600,0])
@@ -61,8 +61,8 @@ d3.csv('ivispro_data_comma.csv', function (data) {
     // X-axis
     svg.append('g')
         .attr('class','axis')
-        .attr('transform', 'translate(0,' + h + ')')
         .call(xAxis)
+        .attr("transform", "translate(0,620)")
         .append('text') // X-axis Label
         .attr('class','label')
         .attr('y',-10)
@@ -74,6 +74,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
     svg.append('g')
         .attr('class', 'axis')
         .call(yAxis)
+        .attr("transform", "translate(0,0)")
         .append('text') // y-axis Label
         .attr('class','label')
         .attr('transform','rotate(-90)')
