@@ -5,6 +5,11 @@ d3.csv('ivispro_data_comma.csv', function (data) {
     var h = 600
     var w = 600
 
+    //fillScale for the circles
+    var fillScale = d3.scale.linear()
+                  .domain([0, 60])
+                  .range([0, 100]);
+
     // Scales
     var colorScale = d3.scale.category20()
 
@@ -36,7 +41,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
         .append('circle')
         .attr('cx',function (d) { return xScale(d.Year2010) })
         .attr('cy',function (d) { return yScale(d.Year2011) })
-        .attr('r','10')
+        .attr('r', function (d) { return fillScale(d.Year2008 / 1000)})
         .attr('stroke','black')
         .attr('stroke-width',1)
         .attr('fill',function (d,i) { return colorScale(i) })
