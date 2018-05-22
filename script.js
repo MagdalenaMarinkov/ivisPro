@@ -12,6 +12,7 @@ d3.queue()
     });
 
 
+
 //fillScale for the circles
 var fillScale = d3.scaleLinear()
     .domain([0, 60])
@@ -75,11 +76,10 @@ function saveId(id){
 }
 
 function updateBubbles(attribute) {
+
     console.log(attribute);
     // Circles
 
-        var body = d3.select('body');
-        var svg = body.select('svg');
         var circles = svg.selectAll('circle')
             .data(dataCsv[0])
             .attr('cx', function (d) {
@@ -111,15 +111,13 @@ function updateBubbles(attribute) {
                 d3.select(this)
                     .transition()
                     .duration(500)
-                    .attr('r',20)
-                    .attr('stroke-width',3)
+
             })
             .on('mouseout', function () {
                 d3.select(this)
                     .transition()
                     .duration(500)
-                    .attr('r',10)
-                    .attr('stroke-width',1)
+
             })
             .append('title') // Tooltip
             .text(function (d) { return d['Country'] +
@@ -129,6 +127,3 @@ function updateBubbles(attribute) {
 
 
 }
-
-
-
