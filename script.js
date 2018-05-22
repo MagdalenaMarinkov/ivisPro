@@ -15,7 +15,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
 
     var xScale = d3.scale.linear()
         .domain([0,65000])
-        .range([20,600])
+        .range([0,600])
     var yScale = d3.scale.linear()
         .domain([0,65000])
         .range([600,0])
@@ -39,7 +39,7 @@ d3.csv('ivispro_data_comma.csv', function (data) {
         .data(data)
         .enter()
         .append('circle')
-        .attr('cx',function (d) { return xScale(d.Year2010) })
+        .attr('cx',function (d) { return xScale(d.Year2005) })
         .attr('cy',function (d) { return yScale(d.Year2011) })
         .attr('r', function (d) { return fillScale(d.Year2008 / 1000)})
         .attr('stroke','black')
