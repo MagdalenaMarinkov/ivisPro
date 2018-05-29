@@ -11,12 +11,10 @@ d3.queue()
         dataCsv=results;
     });
 
-
-
 //fillScale for the circles
 var fillScale = d3.scaleLinear()
     .domain([0, 60])
-    .range([0, 100]);
+    .range([0, 100])
 
 // Scales
 var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
@@ -75,10 +73,13 @@ function saveId(id){
     updateBubbles(id);
 }
 
+
 function updateBubbles(attribute) {
 
     console.log(attribute);
     // Circles
+
+
 
         var circles = svg.selectAll('circle')
             .data(dataCsv[0])
