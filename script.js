@@ -67,6 +67,13 @@ svg.append('g')
     .style('text-anchor','end')
     .text('Y-Achse');
 
+    // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
+    // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
+    var tool_tip = d3.tip()
+      .attr("class", "d3-tip")
+      .offset([-8, 0])
+      .html(function(d) { return "Name: " + d.Country + "<br>" + d.Country });
+    svg.call(tool_tip);
 
 function saveId(id){
     yearId=id;
@@ -82,7 +89,12 @@ function updateBubbles(attribute) {
 
 
         var circles = svg.selectAll('circle')
-            .data(dataCsv[0])
+            .data(dataCsv[0]);
+
+
+            circles
+            .transition()
+            .duration(2000)
             .attr('cx', function (d) {
                 return xScale(d[attribute])
             })
@@ -91,8 +103,9 @@ function updateBubbles(attribute) {
             })
             .attr('r', function (d) {
                 return fillScale(d['Year2008'] / 1000)
-            })
-            .enter()
+            });
+
+            circles.enter()
             .append('circle')
             .attr('cx', function (d) {
                 return xScale(d[attribute])
@@ -100,30 +113,21 @@ function updateBubbles(attribute) {
             .attr('cy', function (d) {
                 return yScale(d['Year2011'])
             })
-            .attr('r', function (d) {
-                return fillScale(d['Year2008'] / 1000)
-            })
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
             .attr('fill', function (data, i) {
                 return colorScale(i)
             })
-            .on('mouseover', function () {
-                d3.select(this)
-                    .transition()
-                    .duration(500)
-
+            .on('mouseover', tool_tip.show)
+            .on('mouseout', tool_tip.hide)
+            .transition()
+            .duration(2000)
+            .attr('r', function (d) {
+                return fillScale(d['Year2008'] / 1000)
             })
-            .on('mouseout', function () {
-                d3.select(this)
-                    .transition()
-                    .duration(500)
 
-            })
-            .append('title') // Tooltip
-            .text(function (d) { return d['Country'] +
-                '\nYear 2010: ' + (d['Year2010']) +
-                '\nYear 2011: ' + (d['Year2011']) });
+
+
 
 
 
