@@ -5,7 +5,7 @@ var w = 600;
 var dataCsv={};
 
 d3.queue()
-    .defer(d3.csv, "ivispro_data_comma.csv")
+    .defer(d3.csv, "data_hiv_comma.csv")
     .awaitAll(function(error, results) {
         if (error) throw error;
         dataCsv=results;
@@ -99,10 +99,10 @@ function updateBubbles(attribute) {
                 return xScale(d[attribute])
             })
             .attr('cy', function (d) {
-                return yScale(d['Year2011'])
+                return yScale(d['GDP'+attribute])
             })
             .attr('r', function (d) {
-                return fillScale(d['Year2008'] / 1000)
+                return fillScale(d['LE'+attribute])
             });
 
             circles.enter()
@@ -111,7 +111,7 @@ function updateBubbles(attribute) {
                 return xScale(d[attribute])
             })
             .attr('cy', function (d) {
-                return yScale(d['Year2011'])
+                return yScale(d['GDP'+attribute])
             })
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
@@ -123,7 +123,7 @@ function updateBubbles(attribute) {
             .transition()
             .duration(2000)
             .attr('r', function (d) {
-                return fillScale(d['Year2008'] / 1000)
+                return fillScale(d['LE'+attribute] / 1000)
             })
 
 
