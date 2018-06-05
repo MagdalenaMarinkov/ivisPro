@@ -2,19 +2,57 @@ var body = d3.select('body');
 var margin = { top: 50, right: 50, bottom: 50, left: 50 };
 var h = 600;
 var w = 600;
-var dataCsv={};
+var dataCsvHIV={};
+var dataCsvLeukemia={};
+var dataCsvTuberculosis={};
+var diseaseId="hiv";
+var yearId="Year2008";
 
 d3.queue()
     .defer(d3.csv, "data_hiv_comma.csv")
     .awaitAll(function(error, results) {
         if (error) throw error;
-        dataCsv=results;
+        dataCsvHIV=results;
     });
 
+d3.queue()
+    .defer(d3.csv, "data_leukemia_comma.csv")
+    .awaitAll(function(error, results) {
+        if (error) throw error;
+        dataCsvLeukemia=results;
+    });
+
+d3.queue()
+    .defer(d3.csv, "data_tuberculosis_comma.csv")
+    .awaitAll(function(error, results) {
+        if (error) throw error;
+        dataCsvTuberculosis=results;
+    });
+
+
+function saveDiseaseId(id){
+    diseaseId=id;
+    updateBubbles();
+}
+function saveYearId(id){
+    yearId=id;
+    updateBubbles();
+}
+
+function retunCVS(){
+    if(diseaseId=="hiv"){
+        return dataCsvHIV[0];
+
+    }else if(diseaseId=="tuberculosis"){
+        return dataCsvTuberculosis[0];
+    }else {
+        return dataCsvLeukemia[0]
+    }
+}
 //fillScale for the circles
 var fillScale = d3.scaleLinear()
     .domain([0, 60])
-    .range([0, 100])
+    .range([0, 100]);
 
 // Scales
 var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
@@ -75,43 +113,40 @@ svg.append('g')
       .html(function(d) { return "Name: " + d.Country + "<br>" + d.Country });
     svg.call(tool_tip);
 
-function saveId(id){
-    yearId=id;
-    updateBubbles(id);
-}
-
-
-function updateBubbles(attribute) {
-
-    console.log(attribute);
-    // Circles
 
 
 
-        var circles = svg.selectAll('circle')
-            .data(dataCsv[0]);
+function updateBubbles(){
+    console.log("Disease ID " + diseaseId);
+    console.log("yearId "+ yearId);
+    var csv={};
+    csv=retunCVS();
 
+
+          var circles = svg.selectAll('circle')
+            .data(retunCVS());
 
             circles
             .transition()
             .duration(2000)
             .attr('cx', function (d) {
-                return xScale(d[attribute])
+                console.log("csv "+ d["Disease"]);
+                return xScale(d[yearId])
             })
             .attr('cy', function (d) {
-                return yScale(d['GDP'+attribute])
+                return yScale(d['GDP'+yearId])
             })
             .attr('r', function (d) {
-                return fillScale(d['LE'+attribute])
+                return fillScale(d['LE'+yearId])
             });
 
             circles.enter()
             .append('circle')
             .attr('cx', function (d) {
-                return xScale(d[attribute])
+                return xScale(d[yearId])
             })
             .attr('cy', function (d) {
-                return yScale(d['GDP'+attribute])
+                return yScale(d['GDP'+yearId])
             })
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
@@ -123,7 +158,7 @@ function updateBubbles(attribute) {
             .transition()
             .duration(2000)
             .attr('r', function (d) {
-                return fillScale(d['LE'+attribute] / 1000)
+                return fillScale(d['LE'+yearId] / 1000)
             })
 
 

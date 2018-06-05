@@ -9,16 +9,26 @@
 <body>
 <script type='text/javascript' src='script.js'></script>
 
+<div id="disease">
+    <button type="button" onclick="saveDiseaseId(this.id)" id="hiv">HIV</button>
+    <button type="button" onclick="saveDiseaseId(this.id)" id="leukemia">Leukemia</button>
+    <button type="button" onclick="saveDiseaseId(this.id)" id="tuberculosis">Turbeculosis</button>
+</div>
+
 <div id="years">
-    <button type="button" onclick="saveId(this.id)" id="Year2008">2008</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2009">2009</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2010">2010</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2011">2011</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2012">2012</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2013">2013</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2014">2014</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2015">2015</button>
-    <button type="button" onclick="saveId(this.id)" id="Year2016">2016</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2008">2008</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2009">2009</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2010">2010</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2011">2011</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2012">2012</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2013">2013</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2014">2014</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2015">2015</button>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2016">2016</button>
+</div>
+
+<div id="animation">
+    <button type="button" onclick="showAnimation(this.id)" id="animationButton">Start</button>
 </div>
 </body>
 </html>
