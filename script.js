@@ -7,6 +7,8 @@ var dataCsvLeukemia = {};
 var dataCsvTuberculosis = {};
 var diseaseId = "hiv";
 var yearId = "Year2008";
+var isAnimating = false;
+var allYearIds =["Year2008", "Year2009", "Year2010", "Year2011", "Year2012", "Year2013","Year2014", "Year2015","Year2016"];
 
 d3.queue()
     .defer(d3.csv, "data_hiv_comma.csv")
@@ -29,6 +31,21 @@ d3.queue()
         dataCsvTuberculosis = results;
     });
 
+d3.interval(function () {
+    if (isAnimating === true) {
+        var index = allYearIds.indexOf(yearId);
+        ++index;
+        saveYearId(allYearIds[index % (allYearIds.length)]);
+    }
+}, 2000, 2000);
+
+function startAnimation() {
+    isAnimating = true;
+}
+
+function stopAnimation() {
+    isAnimating = false;
+}
 
 function saveDiseaseId(id) {
     diseaseId = id;
@@ -113,7 +130,7 @@ var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-8, 0])
     .html(function (d) {
-        return "Name: " + d.Country + "<br>" + "Lebenserwartung: " + d["LE"+ yearId] +"<br>" + "BIP: " + d["GDP"+ yearId] + "<br>" + "Anzahl Erkrankte: " + d[yearId]
+        return "Name: " + d.Country + "<br>" + "Lebenserwartung: " + d["LE" + yearId] + "<br>" + "BIP: " + d["GDP" + yearId] + "<br>" + "Anzahl Erkrankte: " + d[yearId]
     });
 svg.call(tool_tip);
 
@@ -121,11 +138,13 @@ svg.call(tool_tip);
 function updateBubbles() {
     var defs = svg.append('svg:defs');
 
-    defs= svg.selectAll('.flag')
+    defs = svg.selectAll('.flag')
         .data(retunCVS())
         .enter()
         .append("pattern")
-        .attr("id", function(d) { return d.CountryCode; })
+        .attr("id", function (d) {
+            return d.CountryCode;
+        })
         .attr("class", "flag")
         .attr("width", "100%")
         .attr("height", "100%")
@@ -136,10 +155,9 @@ function updateBubbles() {
         // xMidYMid: center the image in the circle
         // slice: scale the image to fill the circle
         .attr("preserveAspectRatio", "xMidYMid slice")
-        .attr("xlink:href", function(d) {
+        .attr("xlink:href", function (d) {
             return "flags/" + d.CountryCode + ".svg";
         });
-
 
 
     var circles = svg.selectAll('circle')
@@ -156,10 +174,10 @@ function updateBubbles() {
             return yScale(d['GDP' + yearId])
         })
         .attr('r', function (d) {
-            return fillScale(d['LE' + yearId]/10)
+            return fillScale(d['LE' + yearId] / 10)
         })
-        .attr("fill", function(d) {
-            return "url(#" + d["CountryCode"] + ")" ;
+        .attr("fill", function (d) {
+            return "url(#" + d["CountryCode"] + ")";
         });
 
 
@@ -174,10 +192,6 @@ function updateBubbles() {
         .attr('stroke', 'black')
         .attr('stroke-width', 1)
 
-        /*.attr('fill', function (data, i) {
-            //return colorScale(i)
-            return "url(#" + d.CountryCode + ")"
-        })*/
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide)
         .transition()
