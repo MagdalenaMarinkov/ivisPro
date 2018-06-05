@@ -1,5 +1,5 @@
 var body = d3.select('body');
-var margin = {top: 50, right: 50, bottom: 50, left: 50};
+var margin = {top: 50, right: 50, bottom: 50, left: 150};
 var h = 600;
 var w = 600;
 var dataCsvHIV = {};
@@ -64,7 +64,7 @@ var xScale = d3.scaleLinear()
     .range([0, 600]);
 
 var yScale = d3.scaleLinear()
-    .domain([0, 10284779])
+    .domain([0, 6000000])
     .range([600, 0]);
 
 var svg = body.append('svg')
