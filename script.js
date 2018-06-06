@@ -36,18 +36,30 @@ d3.interval(function () {
         var index = allYearIds.indexOf(yearId);
         ++index;
         saveYearId(allYearIds[index % (allYearIds.length)]);
+        var valueSlider= yearId.match(/\d/g);
+        valueSlider= valueSlider.join("");
+        document.getElementById("slider").value = valueSlider;
     }
 }, 2000, 2000);
 
 function startAnimation() {
-    for(var i=0; i<dataCsvHIV.length; i++){
-        console.log(dataCsvHIV[i]);
-    }
     isAnimating = true;
+    var radio=document.getElementsByName("disableme");
+    var len=radio.length;
+    for(var i=0;i<len;i++)
+    {
+        radio[i].disabled=true;
+    }
 }
 
 function stopAnimation() {
     isAnimating = false;
+    var radio=document.getElementsByName("disableme");
+    var len=radio.length;
+    for(var i=0;i<len;i++)
+    {
+        radio[i].disabled=false;
+    }
 }
 
 function saveDiseaseId(id) {
@@ -182,16 +194,13 @@ function updateBubbles() {
         })
         .attr('r', function (d) {
             if(d[yearId] === ""){
-                console.log("r =0");
+                console.log(yearId);
                 return fillScale(0);
             }else{
+                console.log(yearId);
                 return fillScale(d['LE' + yearId] / 10)
             }
-        })
-        .attr("fill", function (d) {
-            return "url(#" + d["CountryCode"] + ")";
         });
-
 
     circles.enter()
         .append('circle')
@@ -208,13 +217,17 @@ function updateBubbles() {
         .on('mouseout', tool_tip.hide)
         .transition()
         .duration(2000)
+        .attr("fill", function (d) {
+            return "url(#" + d["CountryCode"] + ")";
+        })
         .attr('r', function (d) {
             if(d[yearId] === "") {
                 return fillScale(0);
             }else{
-                return fillScale(d['LE' + yearId] / 1000)
+                return fillScale(d['LE' + yearId] / 10)
             }
         });
+
 
 
 }
