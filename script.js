@@ -1,7 +1,7 @@
 var body = d3.select('body');
 var margin = {top: 50, right: 50, bottom: 50, left: 150};
 var h = 600;
-var w = 600;
+var w = 1800;
 var dataCsvHIV = {};
 var dataCsvLeukemia = {};
 var dataCsvTuberculosis = {};
@@ -97,12 +97,12 @@ var fillScale = d3.scaleLinear()
 var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
 
 var xScale = d3.scaleLinear()
-    .domain([0, 8023])
-    .range([0, 600]);
+    .domain([-200, 16000])
+    .range([0, 1800]);
 
 var yScale = d3.scaleLinear()
-    .domain([0, 6000000])
-    .range([600, 0]);
+    .domain([-1000, 5500000])
+    .range([620, 0]);
 
 var svg = body.append('svg')
     .attr('height', h + margin.top + margin.bottom)
@@ -112,11 +112,11 @@ var svg = body.append('svg')
 
 // X-axis
 var xAxis = d3.axisBottom(xScale)
-    .ticks(5);
+    .tickValues([500, 1000, 2000, 3000, 5000, 8000, 12000])
 
 // Y-axis
 var yAxis = d3.axisLeft(yScale)
-    .ticks(5);
+    .ticks(10);
 
 svg.append('g')
     .attr('class', 'axis')
@@ -129,6 +129,9 @@ svg.append('g')
     .attr('dy', '.71em')
     .style('text-anchor', 'end')
     .text('X-Achse');
+
+
+
 
 // Y-axis
 svg.append('g')

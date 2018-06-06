@@ -54,3 +54,21 @@ option{
   top: 100%;
   left: 0;
 }
+
+#startAnimationButton {
+background: green;
+color: #ffffff;
+border: 1px solid #eee;
+border-radius: 20px;
+box-shadow: 5px 5px 5px #eee;
+text-shadow:none;
+}
+
+#stopAnimationButton {
+background: red;
+color: #ffffff;
+border: 1px solid #eee;
+border-radius: 20px;
+box-shadow: 5px 5px 5px #eee;
+text-shadow:none;
+}
