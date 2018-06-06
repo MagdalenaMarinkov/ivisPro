@@ -6,9 +6,9 @@ var dataCsvHIV = {};
 var dataCsvLeukemia = {};
 var dataCsvTuberculosis = {};
 var diseaseId = "hiv";
-var yearId = "Year2008";
+var yearId = "Year2006";
 var isAnimating = false;
-var allYearIds =["Year2008", "Year2009", "Year2010", "Year2011", "Year2012", "Year2013","Year2014", "Year2015","Year2016"];
+var allYearIds =["Year2006", "Year2007","Year2008", "Year2009", "Year2010", "Year2011", "Year2012", "Year2013","Year2014"];
 
 d3.queue()
     .defer(d3.csv, "data_hiv_comma.csv")
@@ -40,6 +40,9 @@ d3.interval(function () {
 }, 2000, 2000);
 
 function startAnimation() {
+    for(var i=0; i<dataCsvHIV.length; i++){
+        console.log(dataCsvHIV[i]);
+    }
     isAnimating = true;
 }
 
@@ -58,7 +61,6 @@ function preSaveYearId(){
         });
 }
 function saveYearId(id) {
-    console.log(id);
     yearId = id;
     updateBubbles();
 }
@@ -173,14 +175,18 @@ function updateBubbles() {
         .transition()
         .duration(2000)
         .attr('cx', function (d) {
-            console.log("csv " + d["Disease"]);
             return xScale(d[yearId])
         })
         .attr('cy', function (d) {
             return yScale(d['GDP' + yearId])
         })
         .attr('r', function (d) {
-            return fillScale(d['LE' + yearId] / 10)
+            if(d[yearId] === ""){
+                console.log("r =0");
+                return fillScale(0);
+            }else{
+                return fillScale(d['LE' + yearId] / 10)
+            }
         })
         .attr("fill", function (d) {
             return "url(#" + d["CountryCode"] + ")";
@@ -203,7 +209,11 @@ function updateBubbles() {
         .transition()
         .duration(2000)
         .attr('r', function (d) {
-            return fillScale(d['LE' + yearId] / 1000)
+            if(d[yearId] === "") {
+                return fillScale(0);
+            }else{
+                return fillScale(d['LE' + yearId] / 1000)
+            }
         });
 
 
