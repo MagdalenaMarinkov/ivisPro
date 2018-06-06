@@ -51,8 +51,14 @@ function saveDiseaseId(id) {
     diseaseId = id;
     updateBubbles();
 }
-
+function preSaveYearId(){
+    var click= document.getElementById("slider");
+        click.addEventListener('mouseup', function() {
+            saveYearId("Year"+this.value)
+        });
+}
 function saveYearId(id) {
+    console.log(id);
     yearId = id;
     updateBubbles();
 }

@@ -4,6 +4,23 @@
     stroke: black;
     shape-rendering: crispEdges;
 }
+
+#slider{
+    margin-left: 15px;
+    width: 50%;
+}
+#options{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+datalist {
+    display: inline-flex;
+    width: 50%;
+}
+option{
+    margin-right: 7%;
+}
 .axis text {
     font-family: sans-serif;
     font-size: 11px;

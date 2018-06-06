@@ -7,16 +7,31 @@
     <link rel='stylesheet' href='style.css'>
 </head>
 <body>
-<script type='text/javascript' src='script.js'></script>
+
 
 <div id="disease">
-    <button type="button" onclick="saveDiseaseId(this.id)" id="hiv">HIV</button>
-    <button type="button" onclick="saveDiseaseId(this.id)" id="leukemia">Leukemia</button>
-    <button type="button" onclick="saveDiseaseId(this.id)" id="tuberculosis">Turbeculosis</button>
+    <input type="radio" name="diseaseList" onclick="saveDiseaseId(this.id)" value="hiv" id="hiv">HIV</input>
+    <input type="radio" name="diseaseList" onclick="saveDiseaseId(this.id)" value="leukemia" id="leukemia">Leukemia</input>
+    <input type="radio" name="diseaseList" onclick="saveDiseaseId(this.id)" value="tuberculosis" id="tuberculosis">Turbeculosis</input>
 </div>
+<script type='text/javascript' src='script.js'></script>
+<br>
+<br>
 
-<div id="years">
-    <button type="button" onclick="saveYearId(this.id)" id="Year2008">2008</button>
+    <input id="slider" type="range" min="2008" max="2016" value="2008" step="1" list="tickmarks" oninput='preSaveYearId()'>
+    <br>
+    <datalist id="tickmarks">
+        <option id="Year2008" value="2008" label="2008">
+        <option id="Year2009" value="2009" label="2009">
+        <option id="Year2010" value="2010" label="2010">
+        <option id="Year2011" value="2011" label="2011">
+        <option id="Year2012" value="2012" label="2012">
+        <option id="Year2013" value="2013" label="2013">
+        <option id="Year2014" value="2014" label="2014">
+        <option id="Year2015" value="2015" label="2015">
+        <option id="Year2016" value="2016" label="2016">
+    </datalist>
+    <!--<button type="button" onclick="saveYearId(this.id)" id="Year2008">2008</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2009">2009</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2010">2010</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2011">2011</button>
@@ -24,12 +39,13 @@
     <button type="button" onclick="saveYearId(this.id)" id="Year2013">2013</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2014">2014</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2015">2015</button>
-    <button type="button" onclick="saveYearId(this.id)" id="Year2016">2016</button>
-</div>
+    <button type="button" onclick="saveYearId(this.id)" id="Year2016">2016</button>-->
+
+<br>
 
 <div id="animation">
     <button type="button" onclick="startAnimation()" id="startAnimationButton">Start</button>
-    <button type="button" onclick="stopAnimation()" id="stopAnimationButton">Start</button>
+    <button type="button" onclick="stopAnimation()" id="stopAnimationButton">Stop</button>
 
 </div>
 </body>
