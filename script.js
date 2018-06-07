@@ -1,5 +1,5 @@
 var body = d3.select('body');
-var margin = {top: 50, right: 50, bottom: 50, left: 150};
+var margin = {top: 50, right: 50, bottom: 50, left: 100};
 var h = 400;
 var w = 1800;
 var dataCsvHIV = {};
@@ -92,7 +92,7 @@ function retunCVS() {
 //fillScale for the circles
 var fillScale = d3.scaleLinear()
     .domain([0, 60])
-    .range([0, 100]);
+    .range([0, 70]);
 
 // Scales
 var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
@@ -134,9 +134,14 @@ svg.append('g')
     .attr('y', -10)
     .attr('x', w)
     .attr('dy', '.71em')
-    .style('text-anchor', 'end')
+    .style('text-anchor', 'middle')
     .text('X-Achse');
 
+    svg.append("text")      // text label for the x axis
+            .attr("x", 460 )
+            .attr("y",  450 )
+            .style("text-anchor", "middle")
+            .text("Number diseased");
 
 
 
@@ -151,13 +156,15 @@ svg.append('g')
     .attr('x', 0)
     .attr('y', 5)
     .attr('dy', '.71em')
-    .style('text-anchor', 'end')
+    .style('text-anchor', 'middle')
     .text('Y-Achse');
 
+    svg.append("text")      // text label for the x axis
+            .attr("x", -25 )
+            .attr("y",  -20 )
+            .style("text-anchor", "middle")
+            .text("GDP");
 
-
-// Setup the tool tip.  Note that this is just one example, and that many styling options are available.
-// See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
 var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-8, 0])
