@@ -1,6 +1,6 @@
 var body = d3.select('body');
 var margin = {top: 50, right: 50, bottom: 50, left: 150};
-var h = 600;
+var h = 400;
 var w = 1800;
 var dataCsvHIV = {};
 var dataCsvLeukemia = {};
@@ -9,6 +9,7 @@ var diseaseId = "hiv";
 var yearId = "Year2006";
 var isAnimating = false;
 var allYearIds =["Year2006", "Year2007","Year2008", "Year2009", "Year2010", "Year2011", "Year2012", "Year2013","Year2014"];
+
 
 d3.queue()
     .defer(d3.csv, "data_hiv_comma.csv")
@@ -102,13 +103,19 @@ var xScale = d3.scaleLinear()
 
 var yScale = d3.scaleLinear()
     .domain([-1000, 5500000])
-    .range([620, 0]);
+    .range([420, 0]);
 
 var svg = body.append('svg')
     .attr('height', h + margin.top + margin.bottom)
     .attr('width', w + margin.left + margin.right)
     .append('g')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+     .attr("width", "100%")
+     .attr("height", "100%")
+     .call(d3.zoom().on("zoom", function () {
+        svg.attr("transform", d3.event.transform)
+     }))
+     .append("g");
 
 // X-axis
 var xAxis = d3.axisBottom(xScale)
@@ -121,7 +128,7 @@ var yAxis = d3.axisLeft(yScale)
 svg.append('g')
     .attr('class', 'axis')
     .call(xAxis)
-    .attr("transform", "translate(0,620)")
+    .attr("transform", "translate(0,420)")
     .append('text') // X-axis Label
     .attr('class', 'label')
     .attr('y', -10)
@@ -146,6 +153,8 @@ svg.append('g')
     .attr('dy', '.71em')
     .style('text-anchor', 'end')
     .text('Y-Achse');
+
+
 
 // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
 // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
@@ -230,6 +239,8 @@ function updateBubbles() {
                 return fillScale(d['LE' + yearId] / 10)
             }
         });
+
+
 
 
 

@@ -8,11 +8,18 @@
 </head>
 <body>
 
+<h1>Disease Tendency</h1>
+<h3>What influence does the development of a country have on health? Is there a tendency over the years?
+Does a disease affect life expectany?</h3>
 
 <div id="disease">
     <input type="radio" name="disableme"  onclick="saveDiseaseId(this.id)" value="hiv" id="hiv">HIV</input>
     <input type="radio" name="disableme" onclick="saveDiseaseId(this.id)" value="leukemia" id="leukemia">Leukemia</input>
     <input type="radio" name="disableme" onclick="saveDiseaseId(this.id)" value="tuberculosis" id="tuberculosis">Turbeculosis</input>
+</div>
+<div id="animation">
+    <button type="button" onclick="startAnimation()" id="startAnimationButton">Start</button>
+    <button type="button" onclick="stopAnimation()" id="stopAnimationButton">Stop</button>
 </div>
 <script type='text/javascript' src='script.js'></script>
 <br>
@@ -42,9 +49,6 @@
     <button type="button" onclick="saveYearId(this.id)" id="Year2015">2015</button>
     <button type="button" onclick="saveYearId(this.id)" id="Year2016">2016</button>-->
 
-<div id="animation">
-    <button type="button" onclick="startAnimation()" id="startAnimationButton">Start</button>
-    <button type="button" onclick="stopAnimation()" id="stopAnimationButton">Stop</button>
-</div>
+
 </body>
 </html>
